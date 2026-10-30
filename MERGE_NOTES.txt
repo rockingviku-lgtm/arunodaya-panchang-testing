@@ -1,0 +1,13 @@
+Arunodaya Panchang - merged Kundli engine
+
+The chart.js calculation features have been integrated into src/kundli.js using the existing Swiss Ephemeris engine. This project no longer needs functions/api/chart.js for the Kundli form.
+
+Integrated features:
+- Lahiri sidereal positions and D1, Chandra, D9 diamond charts
+- Planet sign, degree, retrograde status
+- Nakshatra and pada for each planet
+- Birth nakshatra and Vimshottari Mahadasha / Antardasha summary
+- Vargottama summary
+
+Keep the existing src/main.js import path as: import { buildKundli } from "./kundli.js".
+The form expects date, time, timezoneMinutes, lat and lon. Location is entered with latitude/longitude in this version; it does not use the old API's place-name geocoder.

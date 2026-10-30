@@ -1,0 +1,46 @@
+ARUNODAYA PANCHANG — MAIN.JS / STYLE.CSS में केवल जोड़ने वाले बदलाव
+
+1) main.js में मौजूदा footer के अंदर, इस लाइन के बाद:
+  <button data-page="kundli">कुंडली</button>
+और footer के copyright से पहले, यह जोड़ें:
+
+  <a href="/privacy-policy.html">गोपनीयता नीति</a>
+  <a href="/disclaimer.html">अस्वीकरण</a>
+  <a href="/terms-and-conditions.html">नियम एवं शर्तें</a>
+  <a href="/about-us.html">हमारे बारे में</a>
+  <a href="/cookies.html">कुकीज़ नीति</a>
+  <a href="/services.html">हमारी सेवाएँ</a>
+  <a href="/contact-us.html">संपर्क करें</a>
+
+2) उसी footer में copyright से ठीक पहले यह भी जोड़ें:
+
+  <div class="footer-credit">
+    <small>Made In India 🇮🇳</small>
+    <small>Website by Seven Ink Digital Developers Team</small>
+  </div>
+
+3) style.css के बिल्कुल अंत में यह CSS जोड़ें:
+
+.footer-links { flex-wrap: wrap; }
+.footer-links a {
+  color: #aab7cc;
+  font-size: 11px;
+  text-decoration: none;
+}
+.footer-links a:hover { color: #ffdc78; }
+.footer-credit {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #9ba9c2;
+  font-size: 11px;
+}
+.footer-credit small { display: block; }
+
+महत्वपूर्ण:
+- ZIP के सात HTML पेज repository की उसी public root directory में रखें जहाँ index.html है।
+- ये पेज एक-दूसरे से लिंक हैं और हर पेज से मुख्य वेबसाइट पर वापस जाने का लिंक भी है।
+- main.js में पुराने code को delete या replace न करें; ऊपर बताए गए snippets ही जोड़ें।
+- Gmail संपर्क फ़ॉर्म केवल Gmail compose window खोलता है; संदेश अपने-आप नहीं भेजता।
+- AdSense के लिए यह लिखित नीति-पाठ है, Google की consent/CMP और privacy requirements लागू होने पर अलग से सही तरह configure करनी होंगी।
