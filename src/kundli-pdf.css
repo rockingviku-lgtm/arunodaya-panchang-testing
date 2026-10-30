@@ -1,0 +1,4 @@
+.kr-print-button{display:block;width:100%;max-width:360px;margin:18px auto;padding:13px 16px;border:0;border-radius:10px;background:#d6a83e;color:#172033;font-weight:700;font-size:16px;cursor:pointer;position:relative;z-index:2}
+.kr-print-button:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+.kr-print-button:active{transform:scale(.99)}
+@media print{.kr-print-button{display:none!important}}
