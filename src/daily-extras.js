@@ -60,10 +60,10 @@ const DXCSS = `<style>
 #home-extras-section>.section-heading{padding:10px max(16px,env(safe-area-inset-left,0px))}
 #home-extras-section #home-extras-result{padding:0;border:0;background:transparent;max-width:none}
 .dx-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:8px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line,#d9d2cc)}
-.dx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--line,#d9d2cc);align-items:stretch}
-.dx-p{background:var(--dcard,#fff);color:var(--dtxt,#2b2b2b);border-right:1px solid var(--line,#d9d2cc);border-bottom:1px solid var(--line,#d9d2cc);display:flex;flex-direction:column;min-width:0}
-.dx-h{margin:0;background:var(--dhead,#4d5157);color:#fff;font-size:15px;font-weight:600;padding:9px 14px;display:flex;justify-content:space-between;gap:8px;line-height:1.4}
-body:not(.dash-on) .dx-h{background:#4d5157}.dx-h small{font-weight:400;opacity:.85;color:#fff}
+.dx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--pborder,#5c5f63);border-top:1px solid var(--pborder,#5c5f63);align-items:stretch}
+.dx-p{background:var(--dcard,#fff);color:var(--dtxt,#2b2b2b);border-right:1px solid var(--pborder,#5c5f63);border-bottom:1px solid var(--pborder,#5c5f63);display:flex;flex-direction:column;min-width:0}
+.dx-h{margin:0;background:var(--dhead,#4d5157);color:var(--dheadtx,#fff);font-size:15px;font-weight:600;padding:9px 14px;display:flex;justify-content:space-between;gap:8px;line-height:1.4}
+body:not(.dash-on) .dx-h{background:#4d5157}.dx-h small{font-weight:400;opacity:.85;color:inherit}
 .dx-b{flex:1;min-width:0;padding:4px 0 8px}.dx-b>.dx-pad{padding:0 14px}
 .dx-more{align-self:flex-end;background:none;border:0;padding:8px 14px;color:var(--dacc,#b0550a);font:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer}
 .dx-kv{display:flex;justify-content:space-between;gap:14px;padding:6px 14px;border-bottom:1px dotted var(--line,#d9d2cc)}.dx-kv span{opacity:.7;flex:none}.dx-kv b{text-align:right;font-weight:600;color:var(--dacc,#b0550a)}
