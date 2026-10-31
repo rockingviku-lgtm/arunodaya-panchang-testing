@@ -67,20 +67,20 @@ const state = {
 
 const nav = [
   ["home", "⌂", "होम"],
-  ["panchang", "☼", "पंचांग"],
+  ["panchang", "•", "पंचांग"],
   ["calendar", "▦", "कैलेंडर"],
-  ["muhurat", "✧", "मुहूर्त"],
-  ["kundli", "☷", "कुंडली"],
-  ["rashifal", "☀", "राशिफल"],
-  ["gun-milan", "♥", "गुण मिलान"],
-  ["numerology", "🔢", "अंक ज्योतिष"],
-  ["kundli-doshas", "✦", "कुंडली दोष-योग"]
+  ["muhurat", "•", "मुहूर्त"],
+  ["kundli", "•", "कुंडली"],
+  ["rashifal", "•", "राशिफल"],
+  ["gun-milan", "•", "गुण मिलान"],
+  ["numerology", "•", "अंक ज्योतिष"],
+  ["kundli-doshas", "•", "कुंडली दोष-योग"]
 ];
 
 $("#app").innerHTML = `
 <div class="cosmos-scene" aria-hidden="true">
   <div class="orbit orbit-sun">
-    <span class="orbit-sun-body">☀</span>
+    <span class="orbit-sun-body"></span>
   </div>
   <div class="orbit orbit-mars">
     <span class="orbit-mars-body"></span>
@@ -231,7 +231,7 @@ $("#app").innerHTML = `
     </div>
     <div class="tool-grid">
       <button class="tool-card" data-page="panchang">
-        <span class="tool-icon">☼</span>
+        <span class="tool-icon"></span>
         <b>दैनिक पंचांग</b>
         <small>तिथि, नक्षत्र, योग और करण</small>
         <span class="tool-arrow">↗</span>
@@ -243,13 +243,13 @@ $("#app").innerHTML = `
         <span class="tool-arrow">↗</span>
       </button>
       <button class="tool-card" data-page="muhurat">
-        <span class="tool-icon">✧</span>
+        <span class="tool-icon"></span>
         <b>शुभ मुहूर्त</b>
         <small>समय और स्थान के अनुसार</small>
         <span class="tool-arrow">↗</span>
       </button>
       <button class="tool-card" data-page="kundli">
-        <span class="tool-icon">☷</span>
+        <span class="tool-icon"></span>
         <b>जन्म कुंडली</b>
         <small>जन्म विवरण से कुंडली</small>
         <span class="tool-arrow">↗</span>
@@ -356,7 +356,7 @@ function renderPanchang() {
       <h2>दैनिक पंचांग</h2><p>अपनी तारीख और स्थान चुनें।</p>
     </div>
     <div class="panel">
-      <div class="panel-head"><div><h3>पंचांग विवरण</h3><p>तारीख चुनकर विवरण देखें</p></div><span class="panel-symbol">☼</span></div>
+      <div class="panel-head"><div><h3>पंचांग विवरण</h3><p>तारीख चुनकर विवरण देखें</p></div><span class="panel-symbol"></span></div>
       <div class="form-grid">
         <label>पंचांग की तारीख<input id="p-date" type="date" value="${state.date}"></label>
         <label>समय<input id="p-time" type="time" value="12:00"></label>
@@ -423,7 +423,7 @@ function renderMuhurat() {
   return `
     <div class="page-title"><div class="eyebrow muted">AUSPICIOUS TIMINGS</div><h2>मुहूर्त और शुभ समय</h2><p>स्थान और तारीख के अनुसार मुहूर्त।</p></div>
     <div class="panel">
-      <div class="panel-head"><div><h3>दैनिक समय-सारणी</h3><p>अपनी तारीख और शहर चुनें</p></div><span class="panel-symbol purple-bg">✧</span></div>
+      <div class="panel-head"><div><h3>दैनिक समय-सारणी</h3><p>अपनी तारीख और शहर चुनें</p></div><span class="panel-symbol purple-bg"></span></div>
       <div class="form-grid">
         <label>तारीख<input id="m-date" type="date" value="${state.date}"></label>
         <label>शहर / स्थान<input id="m-place" value="Lucknow, India"></label>
@@ -447,7 +447,7 @@ function renderKundli() {
       <h2>जन्म कुंडली</h2><p>अपना जन्म विवरण भरें।</p>
     </div>
     <div class="panel">
-      <div class="panel-head"><div><h3>जन्म विवरण</h3><p>सटीक जन्म समय और जन्मस्थान भरें।</p></div><span class="panel-symbol blue-bg">☷</span></div>
+      <div class="panel-head"><div><h3>जन्म विवरण</h3><p>सटीक जन्म समय और जन्मस्थान भरें।</p></div><span class="panel-symbol blue-bg"></span></div>
       <form id="k-form">
         <div class="form-grid">
           <label>नाम (वैकल्पिक)<input id="k-name" placeholder="अपना नाम"></label>
@@ -1076,7 +1076,7 @@ async function loadHomeFestivals() {
     "sarva-pitru-amavasya", "ekadashi", "pradosh", "sankashti", "purnima", "amavasya", "chandra-grahan", "surya-grahan",
     "republic-day", "independence-day", "gandhi-jayanti"
   ]);
-  const FEST_ICON = { festival: "🪔", vrat: "🕉", grahan: "🌘", national: "✪" };
+  const FEST_ICON = { festival: "•", vrat: "•", grahan: "•", national: "•" };
   const FEST_MONTHS = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
   const FEST_WEEKDAYS = ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
 
@@ -1103,7 +1103,7 @@ async function loadHomeFestivals() {
       lines.push(m.label + ": " + festAt(m.start, dt) + (m.end ? " – " + festAt(m.end, dt) : ""));
     }
     const title = item.name + (item.dayNo ? " · दिन " + item.dayNo + "/" + item.dayTotal : "");
-    const glyph = FEST_ICON[item.kind] || "🪔";
+    const glyph = FEST_ICON[item.kind] || "•";
     const icon = FEST_IMAGE_IDS.has(item.id)
       ? `<img class="home-fest-img" src="${homeEscape(FEST_IMG_DIR + item.id + ".webp")}" alt="${homeEscape(item.name)}" width="28" height="28" loading="lazy" data-glyph="${homeEscape(glyph)}">`
       : glyph;
@@ -1158,7 +1158,7 @@ async function loadHomeFestivals() {
 
     // तस्वीर न खुले तो आइकन (लेआउट नहीं बिगड़ता)
     result.querySelectorAll("img.home-fest-img").forEach(img => {
-      const fallback = () => { img.replaceWith(document.createTextNode(img.dataset.glyph || "🪔")); };
+      const fallback = () => { img.replaceWith(document.createTextNode(img.dataset.glyph || "•")); };
       img.addEventListener("error", fallback, { once: true });
       if (img.complete && img.naturalWidth === 0) fallback();
     });

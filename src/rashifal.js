@@ -5,7 +5,7 @@ import { grahaPositions, planetSign, RASHI_HI, GRAHA_HI, GRAHA_ORDER } from './g
 import { moonSidereal, todayIST, shiftDate, WEEKDAYS_HI } from './festival-calendar.js';
 
 const H = 3600000, DAYMS = 86400000;
-const SYM = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+const SYM = ['•', '•', '•', '•', '•', '•', '•', '•', '•', '•', '•', '•'];
 const FAV = { sun: [3, 6, 10, 11], moon: [1, 3, 6, 7, 10, 11], mars: [3, 6, 11], mercury: [2, 4, 6, 8, 10, 11], jupiter: [2, 5, 7, 9, 11], venus: [1, 2, 3, 4, 5, 8, 9, 11, 12], saturn: [3, 6, 11], rahu: [3, 6, 10, 11], ketu: [3, 6, 11] };
 const AREAS = [['overall', 'सामान्य'], ['career', 'करियर'], ['money', 'धन'], ['love', 'प्रेम/संबंध'], ['health', 'स्वास्थ्य']];
 const W = {
@@ -215,7 +215,7 @@ export function rashifal(kind, iso) {
 const HEAD = ['#e0771f', '#0f8f7d', '#7b4fd6', '#d6457f', '#2f7fd6', '#3f9a2a'];
 const TINT = ['#ffd9b0', '#b8ebe0', '#d9ccf7', '#fbc6dc', '#c2dcf8', '#d0efbd'];
 const STAR_BG = { 1: '#ff9b9b', 2: '#ffbf8a', 3: '#ffe58f', 4: '#cdee9f', 5: '#8fdc97' };
-const star = n => `<span title="${n}/5">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span>`;
+const star = n => `<span title="${n}/5">${'•'.repeat(n)}${'•'.repeat(5 - n)}</span>`;
 const sc = n => ({ t: star(n), bg: STAR_BG[n] });
 
 function tbl(headers, rows) {
@@ -241,7 +241,7 @@ function render(container, st) {
   const { kind, iso, sign } = st, res = rashifal(kind, iso), s = res.signs[sign];
   const KIND = { day: 'दैनिक', week: 'साप्ताहिक', month: 'मासिक', year: 'वार्षिक' }[kind];
   let h = `<p style="margin:10px 0 2px"><b>${KIND} राशिफल · ${esc(title(kind, iso, res))}</b></p>`;
-  if (res.beyond) h += '<small style="display:block;margin-bottom:6px">⚠️ 2050 के बाद के ग्रह-स्थान अनुमानित गणना हैं (राशि-बदल की तारीख़ें कुछ दिन आगे-पीछे हो सकती हैं)।</small>';
+  if (res.beyond) h += '<small style="display:block;margin-bottom:6px">2050 के बाद के ग्रह-स्थान अनुमानित गणना हैं (राशि-बदल की तारीख़ें कुछ दिन आगे-पीछे हो सकती हैं)।</small>';
 
   h += sec('सभी 12 राशियाँ (चंद्र राशि के अनुसार)');
   h += tbl(['राशि', ...AREAS.map(a => a[1]), 'शुभ अंक · रंग'], res.signs.map(x => [`${x.sym} ${x.name}`, ...AREAS.map(([a]) => sc(x.stars[a])), `${x.lucky.num} · ${x.lucky.color}`]));

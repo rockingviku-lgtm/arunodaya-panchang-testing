@@ -150,7 +150,7 @@ container.innerHTML = `<div class="section-heading" style="display:block;margin-
   <h2 style="margin:6px 0 4px">कुंडली मिलान</h2>
   <p style="margin:0;color:var(--muted)">वर और वधू की जन्म जानकारी भरकर गुण मिलान करें।</p>
 </div>
-<div style="display:flex;gap:10px;flex-wrap:wrap">${personForm('g', '👨 वर (लड़का)')}${personForm('b', '👩 वधू (लड़की)')}</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">${personForm('g', 'वर (लड़का)')}${personForm('b', 'वधू (लड़की)')}</div>
     <button id="gm-go" type="button" style="font:inherit;font-weight:700;padding:8px 16px;margin:10px 0;cursor:pointer">गुण मिलान करें</button>
     <small id="gm-msg" style="display:block"></small><div id="gm-out"></div>`;
   const $ = s => container.querySelector(s), msg = t => { $('#gm-msg').textContent = t || ''; };

@@ -23,7 +23,7 @@ const FESTIVAL_IMAGES = Object.fromEntries([
   'republic-day', 'independence-day', 'gandhi-jayanti'
 ].map(id => [id, `${IMG_DIR}${id}.webp`]));
 // तस्वीर न हो तो kind के हिसाब से आइकन
-const KIND_ICON = { festival: '🪔', vrat: '🕉', grahan: '🌘', national: '✪' };
+const KIND_ICON = { festival: '•', vrat: '•', grahan: '•', national: '•' };
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmtTime = d => (d ? new Intl.DateTimeFormat('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: TZ }).format(d) : '—');
@@ -58,7 +58,7 @@ async function resolvePlace(city) {
 
 function iconHtml(it) {
   const src = FESTIVAL_IMAGES[it.id];
-  if (!src) return `<span aria-hidden="true">${KIND_ICON[it.kind] || '✦'}</span>`;
+  if (!src) return `<span aria-hidden="true">${KIND_ICON[it.kind] || '•'}</span>`;
   return `<img class="fest-img" src="${esc(src)}" alt="${esc(it.name)}" width="28" height="28" loading="lazy" data-kind="${esc(it.kind)}">`;
 }
 
@@ -81,7 +81,7 @@ function wireImages() {
     const fallback = () => {
       const s = document.createElement('span');
       s.setAttribute('aria-hidden', 'true');
-      s.textContent = KIND_ICON[img.dataset.kind] || '✦';
+      s.textContent = KIND_ICON[img.dataset.kind] || '•';
       img.replaceWith(s);
     };
     img.addEventListener('error', fallback, { once: true });
@@ -109,7 +109,7 @@ async function render() {
 
   root.innerHTML = `<section class="daily-board">
     <div class="daily-board-head"><div><div class="daily-kicker">ARUNODAYA PANCHANG</div><h2>व्रत और त्योहार</h2>
-      <p>${esc(place.name)} · ${esc(longDate(date))} · ${TZ} (UTC+05:30)</p></div><span class="daily-om">✦</span></div>
+      <p>${esc(place.name)} · ${esc(longDate(date))} · ${TZ} (UTC+05:30)</p></div><span class="daily-om"></span></div>
     <div class="daily-place-form">
       <label for="festival-city">स्थान</label><input id="festival-city" value="${esc(cityText)}">
       <label for="festival-date">तारीख</label><input id="festival-date" type="date" value="${esc(date)}">

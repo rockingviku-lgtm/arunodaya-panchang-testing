@@ -1,5 +1,6 @@
 // Arunodaya dashboard: timeline chart, Vedic time (ghati), upcoming vrat-tyohar, theme toggle.
 // Purely additive: reads existing engines, never edits existing sections.
+import { mountPages } from "./pages.js";
 import { getPanchangDay, getUpcomingFestivals, todayIST, shiftDate, DEFAULT_PLACE } from "./festival-calendar.js";
 
 const TZ = "Asia/Kolkata";
@@ -86,6 +87,7 @@ function renderFestivals(el, iso, place) {
 }
 
 export function mountDashboard(place = DEFAULT_PLACE) {
+  mountPages(); // "और देखें" बटन के पूरे पेज
   const anchor = document.querySelector(".date-strip");
   if (!anchor || document.querySelector("#dash-top")) return;
 
@@ -98,7 +100,7 @@ export function mountDashboard(place = DEFAULT_PLACE) {
   sec.innerHTML = `
     <div class="dash-head">
       <div><div class="dash-date" id="dash-date"></div><div class="dash-tithi" id="dash-tithi"></div></div>
-      <div class="dash-loc">📍 ${esc(place.name)}</div>
+      <div class="dash-loc">${esc(place.name)}</div>
     </div>
     <div class="dash-tools">
       <button type="button" id="dash-toggle-chart">चार्ट छुपाएं</button>

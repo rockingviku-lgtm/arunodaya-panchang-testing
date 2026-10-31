@@ -5,6 +5,7 @@ import { DEFAULT_PLACE, todayIST, shiftDate, getPanchangDay, getDayTimes, getFes
 import { grahaPositions, ascendantSidereal, moonPhase, chaughadiya, horas, planetaryEvents, RASHI_HI, GRAHA_ORDER } from './graha-engine.js';
 import { rashifal } from './rashifal.js';
 
+import { mountPages } from './pages.js';
 const TZ = 'Asia/Kolkata';
 const STORE = 'arunodaya.place';
 const NAVY = 'var(--navy, #10264a)';
@@ -51,10 +52,10 @@ const card = (title, body, more, right = '') => `
   <section class="dx-p"><h3 class="dx-h"><span>${title}</span>${right ? `<small>${right}</small>` : ''}</h3>
     <div class="dx-b">${body}</div>
     ${more ? `<button type="button" class="dx-more" data-more="${more[0]}">${esc(more[1])} →</button>` : ''}</section>`;
-const PG = { 'सूर्य': '☉', 'चंद्र': '☽', 'मंगल': '♂', 'बुध': '☿', 'गुरु': '♃', 'शुक्र': '♀', 'शनि': '♄', 'राहु': '☊', 'केतु': '☋' };
+const PG = { 'सूर्य': '•', 'चंद्र': '•', 'मंगल': '•', 'बुध': '•', 'गुरु': '•', 'शुक्र': '•', 'शनि': '•', 'राहु': '•', 'केतु': '•' };
 const PC = { 'सूर्य': '#e07b00', 'चंद्र': '#8a8f98', 'मंगल': '#d33a2f', 'बुध': '#2e9b4a', 'गुरु': '#d49a00', 'शुक्र': '#e0609f', 'शनि': '#6b8794', 'राहु': '#a0765f', 'केतु': '#a14fc4' };
-const RG = '♈♉♊♋♌♍♎♏♐♑♒♓';
-const evGlyph = t => /युति/.test(t) ? '☌' : /60°/.test(t) ? '⚹' : /90°/.test(t) ? '□' : /120°/.test(t) ? '△' : /150°/.test(t) ? '⚻' : /180°/.test(t) ? '☍' : (PG[t.split(' ')[0]] || '●');
+const RG = '•';
+const evGlyph = t => /युति/.test(t) ? '•' : /60°/.test(t) ? '•' : /90°/.test(t) ? '□' : /120°/.test(t) ? '△' : /150°/.test(t) ? '•' : /180°/.test(t) ? '•' : (PG[t.split(' ')[0]] || '●');
 const DXCSS = `<style>
 #home-extras-section{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0;padding:0;border:0;border-radius:0;background:transparent}
 #home-extras-section>.section-heading{padding:10px max(16px,env(safe-area-inset-left,0px))}
@@ -109,7 +110,7 @@ function render(container) {
   const curCh = [...prevNight, ...ch.day, ...ch.night].find(inRange), curHr = [...prevHr, ...hr].find(inRange);
 
   let h = DXCSS + `<div class="dx-top"><small>${esc(place.name)} · ${esc(stamp(now))} IST</small>
-    <button id="extras-gps" type="button" style="font:inherit;font-size:.8em;padding:6px 12px;cursor:pointer">📍 मेरी लोकेशन</button></div>`;
+    <button id="extras-gps" type="button" style="font:inherit;font-size:.8em;padding:6px 12px;cursor:pointer">मेरी लोकेशन</button></div>`;
   const cards = [];
   const chain = list => list.map(s => esc(s.label) + (s.end ? ' · ' + (dayOf(s.end) === today ? clock(s.end) : shortDate(s.end)) + ' तक' : '')).join('<br>');
   const dk = (k, v) => `<div class="dx-kv"><span>${esc(k)}</span><b>${v}</b></div>`;
@@ -139,7 +140,7 @@ function render(container) {
   // आज का राशिफल
   if (D.rashi && D.rashi.length) {
     const word = n => n >= 4 ? 'शुभ' : n === 3 ? 'मिला-जुला' : 'सावधानी';
-    cards.push(card('आज का राशिफल', `<div class="dx-fill">${D.rashi.map(s => { const n = s.stars.overall; return `<div class="dx-ra"><b>${esc(s.sym || '')} ${esc(s.name)}</b><span class="s" aria-label="${n} में से 5">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span><small>${word(n)}</small></div>`; }).join('')}</div>`, ['rashifal', 'और देखें'], 'चंद्र राशि के अनुसार'));
+    cards.push(card('आज का राशिफल', `<div class="dx-fill">${D.rashi.map(s => { const n = s.stars.overall; return `<div class="dx-ra"><b>${esc(s.sym || '')} ${esc(s.name)}</b><span class="s" aria-label="${n} में से 5">${'•'.repeat(n)}${'•'.repeat(5 - n)}</span><small>${word(n)}</small></div>`; }).join('')}</div>`, ['rashifal', 'और देखें'], 'चंद्र राशि के अनुसार'));
   }
 
   // चौघड़िया
@@ -171,6 +172,7 @@ function locate(container, userAsked) {
 }
 
 export function mountDailyExtras(container) {
+  mountPages(); // "और देखें" बटन के पूरे पेज (main.js में अलग से बुलाना ज़रूरी नहीं)
   if (!container || container.dataset.extrasMounted === '1') return; // main.js में दो बार बुलाने पर दोहराव नहीं
   container.dataset.extrasMounted = '1';
   try { render(container); } catch (e) { console.error('Daily extras failed:', e); container.innerHTML = '<p>कुंडली और ग्रह स्थिति लोड नहीं हो सकी।</p>'; return; }

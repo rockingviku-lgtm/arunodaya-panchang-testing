@@ -256,7 +256,7 @@ function render(container, state) {
         return `<div style="margin:6px 0;${cur ? 'font-weight:700' : ''}">${cur ? '▶ ' : ''}${esc(p.label)}: ${fd(p.start)} से ${fd(p.end)} तक${cur ? ' (अभी)' : p.end < now ? ' (बीत चुकी)' : ''}${ph}</div>`;
       }).join('') : '<div>जन्म से 2050 तक कोई काल-खंड नहीं।</div>') + '</div>';
     }
-    h += row(d.present ? '⚠️' : '✅', `${d.name} — ${d.level || 'नहीं है'}`, sub);
+    h += row(d.present ? '•' : '•', `${d.name} — ${d.level || 'नहीं है'}`, sub);
   }
 
   h += sec('ग्रह: राशि · नक्षत्र · पद · भाव');
@@ -264,7 +264,7 @@ function render(container, state) {
     `${esc(r.rashi)} ${dms(r.deg)} · ${esc(r.nakshatra)} पद ${r.pada} (स्वामी ${esc(r.lord)}) · ${r.bhava}वाँ भाव`)).join('');
 
   h += sec('कुंडली में बने योग');
-  h += k.yogas.length ? k.yogas.map(y => row(y.good ? '✨' : '⚠️', y.name, esc(y.why))).join('') : '<small>कोई प्रमुख योग नहीं मिला।</small>';
+  h += k.yogas.length ? k.yogas.map(y => row(y.good ? '•' : '•', y.name, esc(y.why))).join('') : '<small>कोई प्रमुख योग नहीं मिला।</small>';
 
   h += '<p style="margin-top:14px"><small style="opacity:.75">गणना: निरयण (लाहिरी), संपूर्ण-राशि भाव, मध्यम राहु; 1860–2050 के बीच के जन्म के लिए। दोष-योग के नियम परंपरागत हैं और विद्वानों में मतभेद रहता है; महत्वपूर्ण निर्णय से पहले अनुभवी ज्योतिषी से मिलाएँ।</small></p>';
   state.out.innerHTML = h;

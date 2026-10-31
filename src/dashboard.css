@@ -72,3 +72,24 @@ body.dash-on .home-daily-grid>.section .panel,body.dash-on .home-daily-grid>.sec
 /* हर पैनल का बॉर्डर एक जैसा (शीर्ष-पट्टी के रंग का) */
 .dx-p{border-color:var(--pborder)!important}
 .dx-top,.dash-tools{border-color:var(--pborder)}
+
+/* ---- बिना cards: हल्की table जैसी, सीधी रेखाओं वाली premium शैली ---- */
+body.dash-on .section,body.dash-on .panel,body.dash-on .result-box,body.dash-on .tool-card,body.dash-on .fact-card,body.dash-on .date-strip,body.dash-on .btn,body.dash-on .today-btn,body.dash-on input,body.dash-on select,body.dash-on textarea,body.dash-on .hero,body.dash-on .hero *,body.dash-on .topbar,body.dash-on .brand-mark,body.dash-on .cosmos-scene{border-radius:0!important;box-shadow:none!important}
+body.dash-on .section{margin:0 0 0;padding:0;border:0;background:transparent}
+body.dash-on .section>.section-heading{background:var(--dhead);color:var(--dheadtx);padding:9px 14px;margin:0;border:1px solid var(--pborder)}
+body.dash-on .section>.section-heading h2,body.dash-on .section>.section-heading .eyebrow,body.dash-on .section>.section-heading p{color:var(--dheadtx);margin:0}
+body.dash-on .section>.section-heading h2{font-size:1rem;font-weight:600;letter-spacing:.01em}
+body.dash-on .section>.panel,body.dash-on .section>.result-box{border:1px solid var(--pborder);border-top:0;padding:10px 14px}
+body.dash-on .timing-item{border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;margin:0!important;padding:8px 0!important;background:transparent!important}
+body.dash-on .tool-grid{display:grid;gap:0;border-left:1px solid var(--pborder);border-top:1px solid var(--pborder)}
+body.dash-on .tool-card{border:0!important;border-right:1px solid var(--pborder)!important;border-bottom:1px solid var(--pborder)!important;transform:none!important;padding:14px 16px}
+body.dash-on .tool-card:hover{background:var(--tint)}
+body.dash-on .btn,body.dash-on button.btn{border:1px solid var(--pborder);background:var(--btnbg);color:var(--btntx);font-weight:600}
+body.dash-on .btn.primary,body.dash-on .primary-btn{background:var(--dhead);color:var(--dheadtx);border-color:var(--dhead)}
+body.dash-on table{border-collapse:collapse;width:100%}
+body.dash-on th{background:var(--dhead);color:var(--dheadtx);padding:8px 10px;text-align:left;font-weight:600}
+body.dash-on td{padding:8px 10px;border-bottom:1px solid var(--line)}
+body.dash-on tr:nth-child(even) td{background:rgba(128,128,128,.07)}
+body.dash-on .bottom-nav span,body.dash-on .tool-card .icon,body.dash-on .brand-mark{display:none}
+body.dash-on .bottom-nav{border-top:1px solid var(--pborder)}
+body.dash-on main,body.dash-on .main{width:100%;max-width:none;padding-left:0;padding-right:0}
