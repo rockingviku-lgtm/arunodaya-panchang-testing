@@ -256,7 +256,7 @@ function render(container, state) {
         return `<div style="margin:6px 0;${cur ? 'font-weight:700' : ''}">${cur ? '▶ ' : ''}${esc(p.label)}: ${fd(p.start)} से ${fd(p.end)} तक${cur ? ' (अभी)' : p.end < now ? ' (बीत चुकी)' : ''}${ph}</div>`;
       }).join('') : '<div>जन्म से 2050 तक कोई काल-खंड नहीं।</div>') + '</div>';
     }
-    h += row(d.present ? '•' : '•', `${d.name} — ${d.level || 'नहीं है'}`, sub);
+    h += row(d.present ? '!' : '✓', `${d.name} — ${d.level || 'नहीं है'}`, sub);
   }
 
   h += sec('ग्रह: राशि · नक्षत्र · पद · भाव');

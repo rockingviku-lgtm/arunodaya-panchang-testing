@@ -32,7 +32,7 @@ export function panchangHtml(p) {
     row('•', 'करण', chain(p.karanas, b)),
     row('•', 'वार / पक्ष', `${esc(p.weekday)} · ${esc(p.paksha)}`),
     row('•', 'चांद्र मास', `अमांत: ${esc(p.amantaMonth)} · पूर्णिमांत: ${esc(p.purnimantaMonth)}`),
-    row('•', 'चंद्र राशि', chain(p.moonRashi, b)),
+    row('♈', 'चंद्र राशि', chain(p.moonRashi, b)),
     row('•', 'सूर्य राशि / नक्षत्र', `${esc(p.sunRashi)} · ${esc(p.sunNakshatra)}`),
     row('•', 'संवत', `विक्रम ${p.vikramSamvat} · शक ${p.shakaSamvat} · गुजराती ${p.gujaratiSamvat}`)
   ].join('');
