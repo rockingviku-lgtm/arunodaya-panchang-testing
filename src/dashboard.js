@@ -106,7 +106,7 @@ export function mountDashboard(place = DEFAULT_PLACE) {
     </div>
     <div class="dash-chart" id="dash-chart"></div>
     <div class="dash-two">
-      <div class="dash-card"><div class="dash-ch">आने वाले व्रत और त्योहार</div><div id="dash-fest"></div></div>
+      <div class="dash-card"><div class="dash-ch">आने वाले व्रत और त्योहार</div><div id="dash-fest"></div><div style="text-align:right;padding:8px 14px"><button type="button" data-more="festivals" style="background:none;border:0;color:var(--dacc);font:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer">और देखें →</button></div></div>
       <div class="dash-card"><div class="dash-ch">वैदिक समय</div><div class="dash-clock" id="dash-clock"></div></div>
     </div>`;
   anchor.parentNode.insertBefore(sec, anchor);

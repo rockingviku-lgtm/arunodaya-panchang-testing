@@ -50,7 +50,7 @@ const kv = (k, v, last) => `<div style="display:flex;justify-content:space-betwe
 const card = (title, body, more, right = '') => `
   <section class="dx-p"><h3 class="dx-h"><span>${title}</span>${right ? `<small>${right}</small>` : ''}</h3>
     <div class="dx-b">${body}</div>
-    ${more ? `<button type="button" class="dx-more" data-page="${more[0]}">${esc(more[1])} →</button>` : ''}</section>`;
+    ${more ? `<button type="button" class="dx-more" data-more="${more[0]}">${esc(more[1])} →</button>` : ''}</section>`;
 const PG = { 'सूर्य': '☉', 'चंद्र': '☽', 'मंगल': '♂', 'बुध': '☿', 'गुरु': '♃', 'शुक्र': '♀', 'शनि': '♄', 'राहु': '☊', 'केतु': '☋' };
 const PC = { 'सूर्य': '#e07b00', 'चंद्र': '#8a8f98', 'मंगल': '#d33a2f', 'बुध': '#2e9b4a', 'गुरु': '#d49a00', 'शुक्र': '#e0609f', 'शनि': '#6b8794', 'राहु': '#a0765f', 'केतु': '#a14fc4' };
 const RG = '♈♉♊♋♌♍♎♏♐♑♒♓';
@@ -127,29 +127,29 @@ function render(container) {
 
   // लग्न कुंडली + ग्रह (चिह्नों के साथ)
   const grows = GRAHA_ORDER.map(k => { const g = pos[k]; return `<div class="dx-gr"><i style="color:${PC[g.name]}">${PG[g.name]}</i><span>${esc(g.name)}</span><em>${RG[g.sign]} ${esc(g.rashi)}</em><b>${dms(g.deg)}</b><u style="text-decoration:none;opacity:.7">${k === 'rahu' || k === 'ketu' ? 'वक्री' : g.retro ? 'वक्री' : 'मार्गी'}</u><small>${esc(g.nakshatra)} पद ${g.pada}</small></div>`; }).join('');
-  cards.push(card('लग्न कुंडली (D1) और ग्रह', chartSvg(lagnaSign, pos) + grows, ['kundli', 'जन्म कुंडली बनाएँ'], `लग्न ${esc(RASHI_HI[lagnaSign])} ${dms(asc % 30)}`));
+  cards.push(card('लग्न कुंडली (D1) और ग्रह', chartSvg(lagnaSign, pos) + grows, ['kundli', 'और देखें'], `लग्न ${esc(RASHI_HI[lagnaSign])} ${dms(asc % 30)}`));
 
   // आने वाली ग्रह-घटनाएँ (चिह्नों के साथ)
   {
     const ev = eventsNow(ms);
     const body = ev.length ? `<div class="dx-fill">${ev.map(e => { const first = e.text.split(' ')[0].split('-')[0]; return `<div class="dx-ev"><i style="color:${PC[first] && !/°|युति/.test(e.text) ? PC[first] : 'inherit'}">${evGlyph(e.text)}</i><div style="min-width:0"><b>${esc(e.text)}</b><small>${esc(shortDate(new Date(e.ms)))} · ${Math.max(0, Math.floor((e.ms - ms) / 86400000)) === 0 ? 'आज' : Math.floor((e.ms - ms) / 86400000) + ' दिन बाद'}</small></div></div>`; }).join('')}</div>` : '<p class="dx-pad">अगले 60 दिनों में कोई प्रमुख ग्रह-घटना नहीं।</p>';
-    cards.push(card('आने वाली ग्रह-घटनाएँ', body, ['rashifal', 'और देखें'], 'राशि · नक्षत्र · वक्री · कोण'));
+    cards.push(card('आने वाली ग्रह-घटनाएँ', body, ['events', 'और देखें'], 'राशि · नक्षत्र · वक्री · कोण'));
   }
 
   // आज का राशिफल
   if (D.rashi && D.rashi.length) {
     const word = n => n >= 4 ? 'शुभ' : n === 3 ? 'मिला-जुला' : 'सावधानी';
-    cards.push(card('आज का राशिफल', `<div class="dx-fill">${D.rashi.map(s => { const n = s.stars.overall; return `<div class="dx-ra"><b>${esc(s.sym || '')} ${esc(s.name)}</b><span class="s" aria-label="${n} में से 5">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span><small>${word(n)}</small></div>`; }).join('')}</div>`, ['rashifal', 'साप्ताहिक · मासिक · वार्षिक'], 'चंद्र राशि के अनुसार'));
+    cards.push(card('आज का राशिफल', `<div class="dx-fill">${D.rashi.map(s => { const n = s.stars.overall; return `<div class="dx-ra"><b>${esc(s.sym || '')} ${esc(s.name)}</b><span class="s" aria-label="${n} में से 5">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span><small>${word(n)}</small></div>`; }).join('')}</div>`, ['rashifal', 'और देखें'], 'चंद्र राशि के अनुसार'));
   }
 
   // चौघड़िया
   if (ch.day.length) {
     const list = (t, arr) => `<div class="dx-sub">${t}</div>` + arr.map(c => `<div class="dx-ch ${c.good ? 'g' : 'r'}${c === curCh ? ' now' : ''}"><b>${esc(c.name)}${c === curCh ? ' · अभी' : ''}</b><span>${clock(c.start)} – ${clock(c.end)}</span></div>`).join('');
-    cards.push(card('चौघड़िया' + (curCh ? ' · अभी ' + esc(curCh.name) : ''), list('दिन', ch.day) + list('रात', ch.night), ['muhurat', 'शुभ मुहूर्त'], esc(place.name.split(',')[0])));
+    cards.push(card('चौघड़िया' + (curCh ? ' · अभी ' + esc(curCh.name) : ''), list('दिन', ch.day) + list('रात', ch.night), ['chaughadiya', 'और देखें'], esc(place.name.split(',')[0])));
   }
 
   // होरा
-  if (hr.length) cards.push(card('होरा' + (curHr ? ' · अभी ' + esc(curHr.lord) : ''), hr.map(x => `<div class="dx-ch ${x.night ? 'h2' : 'h1'}${x === curHr ? ' now' : ''}"><b style="color:${PC[x.lord]}">${PG[x.lord]} ${esc(x.lord)}</b><span>${clock(x.start)} – ${clock(x.end)}</span></div>`).join(''), null));
+  if (hr.length) cards.push(card('होरा' + (curHr ? ' · अभी ' + esc(curHr.lord) : ''), hr.map(x => `<div class="dx-ch ${x.night ? 'h2' : 'h1'}${x === curHr ? ' now' : ''}"><b style="color:${PC[x.lord]}">${PG[x.lord]} ${esc(x.lord)}</b><span>${clock(x.start)} – ${clock(x.end)}</span></div>`).join(''), ['hora', 'और देखें']));
 
   // चंद्र कला
   cards.push(card('चंद्र कला', dk('प्रकाशित भाग', `${ph.illumination.toFixed(0)}%`) + dk('पक्ष', `${esc(ph.paksha)} · दिन ${ph.pakshaDay}/15`), null));
