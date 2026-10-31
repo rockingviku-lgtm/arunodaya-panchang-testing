@@ -60,13 +60,24 @@ function startClock(el, sunrise) {
   clockTimer = setInterval(tick, 1000);
 }
 
+const MONS = ["जन॰", "फ़र॰", "मार्च", "अप्रै॰", "मई", "जून", "जुला॰", "अग॰", "सित॰", "अक्टू॰", "नव॰", "दिस॰"];
+const TILE = ["#f3d9a6", "#cfe8dc", "#f1cfe0", "#d7ddf3", "#f6cbb0", "#d9ecb8"];
 function renderFestivals(el, iso, place) {
   try {
-    const list = getUpcomingFestivals(iso, 30, place, { includeStart: true }).slice(0, 7);
-    el.innerHTML = list.length
-      ? list.map((u, i) => `<div class="dash-fest ${i === 0 && u.daysAway === 0 ? "today" : ""}">
-          <b>${esc(u.items.map((f) => f.label).join(" · "))}</b>
-          <small>${u.daysAway === 0 ? "आज" : u.daysAway + " दिन बाद"} · ${esc(u.date)} · ${esc(u.weekday)}</small></div>`).join("")
+    const rows = [];
+    for (const u of getUpcomingFestivals(iso, 30, place, { includeStart: true })) {
+      for (const f of u.items) rows.push({ u, f });
+    }
+    el.innerHTML = rows.length
+      ? rows.slice(0, 14).map(({ u, f }, i) => {
+          const [, m, d] = u.date.split("-").map(Number);
+          const name = f.name || f.label || "";
+          const today = u.daysAway === 0;
+          return `<div class="dash-fest ${today ? "today" : ""}" style="display:flex;gap:12px;align-items:center">
+            <span style="flex:none;width:50px;text-align:center;padding:5px 0;line-height:1.1;color:#1b2150;background:${today ? "#f3a79d" : TILE[i % 6]}"><b style="display:block;font-size:19px;color:#1b2150">${d}</b><small style="color:#1b2150">${MONS[m - 1]}</small></span>
+            <span style="min-width:0"><b>${esc(name)}${f.dayNo ? " · दिन " + f.dayNo : ""}</b>
+            <small>${today ? "आज" : u.daysAway + " दिन बाद"} · ${esc(u.weekday)}</small></span></div>`;
+        }).join("")
       : "<p>अगले 30 दिनों में कोई व्रत या त्योहार दर्ज नहीं है।</p>";
   } catch (e) {
     console.error(e);
