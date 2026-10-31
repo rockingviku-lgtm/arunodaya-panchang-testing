@@ -1,56 +1,69 @@
-/* Arunodaya dashboard theme — additive. Active only when body.dash-on. Light mode: body.dash-light */
-body.dash-on{--navy:#a40d0d;--navy-2:#7d0a0a;--orange:#e8a33a;--ink:#e8e8e8;--muted:#a8a8a8;--line:#3a3a3a;--paper:#141414;--soft:#1c1c1c;--dbg:#0f0f0f;--dcard:#141414;--dhead:#262626;--dtxt:#e8e8e8;--dacc:#e8a33a;
+/* Arunodaya dashboard theme — Drik Panchang जैसा नरम (soft) रंग। केवल body.dash-on पर सक्रिय।
+   डिफ़ॉल्ट: हल्का (light)। गहरा थीम: body.dash-dark ("थीम बदलें" बटन)। */
+body.dash-on{
+  --navy:#a80f0f;--navy-2:#8a0b0b;--orange:#d9822b;
+  --ink:#2b2b2b;--muted:#6c6760;--line:#d9d9d9;--paper:#ffffff;--soft:#f5f5f5;
+  --dbg:#efefef;--dcard:#ffffff;--dhead:#5c5f63;--dheadtx:#ffffff;--dtxt:#222222;--dacc:#b8650b;
+  --bar:#a80f0f;--bartx:#ffffff;--tint:#e6e6e6;--chart:#d4d4cf;--chartink:#2b2b2b;--btnbg:#ffffff;--btntx:#a40d0d;--btnbd:#d8cfc6;
+  --today:#f6cfc8;--todaytx:#5a1a14;--foot:#3b3a39;--foottx:#e6e1db;
   background:var(--dbg);color:var(--dtxt)}
-body.dash-on.dash-light{--ink:#202a3b;--muted:#6b7280;--line:#e5e7eb;--paper:#fff;--soft:#f7f8fb;--dbg:#f5f6f8;--dcard:#fff;--dhead:#f0e3e3;--dtxt:#202a3b;--dacc:#a40d0d}
+body.dash-on.dash-dark{
+  --ink:#e9e6e2;--muted:#a8a29b;--line:#3a3836;--paper:#232120;--soft:#2a2826;
+  --dbg:#1b1a19;--dcard:#232120;--dhead:#3a3d42;--dheadtx:#f1eeea;--dtxt:#e9e6e2;--dacc:#e9a860;
+  --bar:#8f1313;--bartx:#ffffff;--tint:#2d2b29;--chart:#d9d4ce;--chartink:#222;--btnbg:#2d2b29;--btntx:#e9e6e2;--btnbd:#4a4744;
+  --today:#7a3a32;--todaytx:#fff;--foot:#141312;--foottx:#cfc9c2}
+
 body.dash-on a{color:var(--dacc)}
-body.dash-on .topbar{background:#a40d0d;color:#fff;min-height:56px;padding:6px 14px}
-body.dash-on .topbar .brand-name,body.dash-on .topbar .brand-sub{color:#fff}
+body.dash-on .topbar{background:var(--bar);color:var(--bartx);min-height:56px;padding:6px 14px}
+body.dash-on .topbar .brand-name,body.dash-on .topbar .brand-sub,body.dash-on .topbar a,body.dash-on .topbar button{color:var(--bartx)}
 body.dash-on .today-btn{background:#fff;color:#a40d0d}
-body.dash-on .hero{min-height:0;padding:14px 18px;background:#a40d0d}
-body.dash-on .hero h1{font-size:1.2rem;margin:4px 0}
+body.dash-on .hero{min-height:0;padding:14px 18px;background:#4f555a!important;background-image:none!important;color:#fff}
+body.dash-on .hero::before,body.dash-on .hero::after{display:none!important}
+body.dash-on .hero h1{font-size:1.2rem;margin:4px 0;color:var(--dheadtx)}
 body.dash-on .hero p,body.dash-on .hero-actions{display:none}
 body.dash-on .date-strip{background:var(--dcard);border:1px solid var(--line);color:var(--dtxt)}
 body.dash-on .section,body.dash-on .panel,body.dash-on .result-box,body.dash-on .tool-card,body.dash-on .fact-card,body.dash-on .timing-item{background:var(--dcard);color:var(--dtxt);border-color:var(--line)}
 body.dash-on .section-heading h2{color:var(--dtxt)}
+body.dash-on h1,body.dash-on h2,body.dash-on h3,body.dash-on .today-date{color:var(--dtxt)}
 body.dash-on input,body.dash-on select,body.dash-on textarea{background:var(--soft);color:var(--dtxt);border:1px solid var(--line)}
 body.dash-on .muted,body.dash-on small{color:var(--muted)}
-body.dash-on footer{background:#1a1a1a;color:#ddd}
-body.dash-on .bottom-nav{background:#1a1a1a}
-body.dash-on .cosmos-scene{opacity:.25}
+body.dash-on table{color:var(--dtxt)}
+body.dash-on footer{background:var(--foot);color:var(--foottx)}
+body.dash-on footer a{color:var(--foottx)}
+body.dash-on .bottom-nav{background:var(--foot)}
+body.dash-on .cosmos-scene{opacity:.12}
 
-#dash-top{max-width:var(--content);margin:0 auto 18px;padding:0 4px}
-.dash-head{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#2a2a2a;color:#eee;padding:10px 14px;border-radius:6px 6px 0 0}
-.dash-date{font-weight:600}.dash-tithi{font-size:.85rem;color:#e8a33a}.dash-loc{font-size:.85rem;background:#1b1b1b;border:1px solid #444;padding:4px 10px;border-radius:4px}
-.dash-tools{display:flex;gap:8px;padding:8px 0}
-.dash-tools button{background:#2c2c2c;color:#ddd;border:1px solid #444;border-radius:4px;padding:6px 12px;font-size:.8rem}
-body.dash-light .dash-tools button{background:#fff;color:#a40d0d;border-color:#d9b3b3}
-.dash-chart{background:#cfcfcf;color:#222;border-radius:4px;padding:8px;overflow-x:auto}
+#dash-top{max-width:none;margin:0;padding:0}
+.dash-head{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--dhead);color:var(--dheadtx);padding:10px 14px;border-radius:0}
+.dash-date{font-weight:600;color:var(--dheadtx)}.dash-tithi{font-size:.85rem;color:#f3d9a6}.dash-loc{font-size:.85rem;background:rgba(255,255,255,.14);color:var(--dheadtx);border:1px solid rgba(255,255,255,.3);padding:4px 10px;border-radius:4px}
+.dash-tools{display:flex;gap:8px;padding:8px 14px;background:var(--tint);border-bottom:1px solid var(--line)}
+.dash-tools button{background:var(--btnbg);color:var(--btntx);border:1px solid var(--btnbd);border-radius:4px;padding:6px 12px;font-size:.8rem;cursor:pointer}
+.dash-chart{background:var(--chart);color:var(--chartink);border-radius:0;padding:8px;overflow-x:auto}
 .dash-chart[hidden]{display:none}
 .dash-axis{display:flex;gap:6px;font-size:.7rem;color:#555;min-width:640px}.dash-axis i{width:56px}.dash-axis div{position:relative;flex:1;height:14px}.dash-axis span{position:absolute;transform:translateX(-30%)}
 .dash-row{display:flex;gap:6px;margin:4px 0;min-width:640px;align-items:stretch}
 .dash-row>span{width:56px;font-size:.78rem;font-style:italic;color:#444;align-self:center}
-.dash-bar{flex:1;display:flex;border:1px solid #888;background:#e6e6e6;min-height:34px}
-.dash-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.75rem;border-right:1px solid #888;padding:2px;text-align:center;overflow:hidden;white-space:nowrap}
-.dash-seg.alt{background:#d6d6d6}.dash-seg small{color:#555;font-size:.65rem}
+.dash-bar{flex:1;display:flex;border:1px solid #b9b0a6;background:#f4f0eb;min-height:34px}
+.dash-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.75rem;border-right:1px solid #b9b0a6;padding:2px;text-align:center;overflow:hidden;white-space:nowrap;color:#2b2b2b}
+.dash-seg.alt{background:#e7e1da}.dash-seg small{color:#6c6760;font-size:.65rem}
 .dash-sun{display:flex;justify-content:space-between;font-size:.75rem;color:#444;margin-top:4px;min-width:640px}
-.dash-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
-.dash-card{background:var(--dcard);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.dash-ch,body.dash-on .home-daily-grid .section-heading{background:var(--dhead);padding:8px 12px;font-weight:600;color:var(--dtxt)}
-.dash-fest{padding:8px 12px;border-bottom:1px solid var(--line)}.dash-fest b{display:block;color:var(--dacc);font-weight:500}.dash-fest small{color:var(--muted)}
-.dash-fest.today{background:#c96a5e}.dash-fest.today b,.dash-fest.today small{color:#fff}
-.dash-clock{text-align:center;padding:12px}.dash-big{font-size:2rem;color:#f08a3c;font-weight:600;font-variant-numeric:tabular-nums}.dash-sub{margin-top:8px;color:var(--dacc)}
+.dash-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:0}
+.dash-card{background:var(--dcard);border:1px solid var(--line);border-radius:0;overflow:hidden}
+.dash-ch,body.dash-on .home-daily-grid .section-heading{background:var(--dhead);padding:9px 14px;font-weight:600;color:var(--dheadtx)}
+body.dash-on .home-daily-grid .section-heading h2,body.dash-on .home-daily-grid .section-heading p{color:var(--dheadtx);margin:0}
+.dash-fest{padding:8px 14px;border-bottom:1px solid var(--line)}.dash-fest b{display:block;color:var(--dacc);font-weight:600}.dash-fest small{color:var(--muted)}
+.dash-fest.today{background:var(--today)}.dash-fest.today b,.dash-fest.today small{color:var(--todaytx)}
+.dash-clock{text-align:center;padding:14px}.dash-big{font-size:2rem;color:#b11212;font-weight:600;font-variant-numeric:tabular-nums}
+body.dash-dark .dash-big{color:#f0a060}
+.dash-sub{margin-top:8px;color:var(--dacc)}
 
-body.dash-on .home-daily-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px!important;align-items:start}
-body.dash-on .home-daily-grid>.section{margin:0;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:6px}
-body.dash-on .home-daily-grid>.section .panel,body.dash-on .home-daily-grid>.section>div:not(.section-heading){padding:10px 12px;max-height:520px;overflow:auto}
+body.dash-on .home-daily-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:0!important;align-items:start}
+body.dash-on .home-daily-grid>.section{margin:0;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:0}
+body.dash-on .home-daily-grid>.section .panel,body.dash-on .home-daily-grid>.section>div:not(.section-heading){padding:10px 14px;max-height:520px;overflow:auto}
 @media(max-width:1000px){body.dash-on .home-daily-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){body.dash-on .home-daily-grid,.dash-two{grid-template-columns:1fr}.dash-head{flex-direction:column;align-items:flex-start}}
 
-/* ---- Drik-style flat full-width layout (additive) ---- */
+/* ---- Drik-style flat full-width layout ---- */
 #home-festival-section{display:none!important} /* पुराना दोहराव: त्योहार अब dashboard.js की सूची में एक ही जगह */
-#dash-top{max-width:none;margin:0;padding:0}
 .dash-head,.dash-tools,.dash-chart{margin-left:0;margin-right:0}
-.dash-card,.dash-chart,.dash-head{border-radius:0}
-.dash-two{grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:0}
-.dash-fest.today{background:#c96a5e}
 .dash-fest b{display:block}

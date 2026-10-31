@@ -89,9 +89,9 @@ export function mountDashboard(place = DEFAULT_PLACE) {
   const anchor = document.querySelector(".date-strip");
   if (!anchor || document.querySelector("#dash-top")) return;
 
-  const saved = (() => { try { return localStorage.getItem("arunodaya-theme"); } catch { return null; } })();
+  const saved = (() => { try { return localStorage.getItem("arunodaya-theme-v2"); } catch { return null; } })();
   document.body.classList.add("dash-on");
-  if (saved === "light") document.body.classList.add("dash-light");
+  if (saved === "dark") document.body.classList.add("dash-dark"); // डिफ़ॉल्ट: हल्का (Drik जैसा)
 
   const sec = document.createElement("section");
   sec.id = "dash-top";
@@ -118,8 +118,8 @@ export function mountDashboard(place = DEFAULT_PLACE) {
     e.target.textContent = chartHidden ? "चार्ट दिखाएं" : "चार्ट छुपाएं";
   });
   sec.querySelector("#dash-toggle-theme").addEventListener("click", () => {
-    const light = document.body.classList.toggle("dash-light");
-    try { localStorage.setItem("arunodaya-theme", light ? "light" : "dark"); } catch {}
+    const dark = document.body.classList.toggle("dash-dark");
+    try { localStorage.setItem("arunodaya-theme-v2", dark ? "dark" : "light"); } catch {}
   });
 
   const refresh = (iso) => {
