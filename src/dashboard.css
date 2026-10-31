@@ -45,3 +45,10 @@ body.dash-on .home-daily-grid>.section{margin:0;padding:0;overflow:hidden;border
 body.dash-on .home-daily-grid>.section .panel,body.dash-on .home-daily-grid>.section>div:not(.section-heading){padding:10px 12px;max-height:520px;overflow:auto}
 @media(max-width:1000px){body.dash-on .home-daily-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){body.dash-on .home-daily-grid,.dash-two{grid-template-columns:1fr}.dash-head{flex-direction:column;align-items:flex-start}}
+
+/* ---- Drik-style flat full-width layout (additive) ---- */
+#home-festival-section{display:none!important} /* पुराना दोहराव: त्योहार अब dashboard.js की सूची में एक ही जगह */
+#dash-top{max-width:none;margin:0;padding:0}
+.dash-head,.dash-tools,.dash-chart{margin-left:0;margin-right:0}
+.dash-card,.dash-chart,.dash-head{border-radius:0}
+.dash-two{grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:0}

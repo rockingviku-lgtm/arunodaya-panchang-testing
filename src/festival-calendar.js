@@ -888,3 +888,22 @@ export function getPanchangDay(dateISO, place = DEFAULT_PLACE) {
   };
 }
 export { ayanamsa, centuries, jdUT };
+
+// ---------- दिन के शुभ-अशुभ काल: राहुकाल, यमगंड, गुलिक, अभिजीत, ब्रह्म मुहूर्त ----------
+// दिन (सूर्योदय-सूर्यास्त) को 8 बराबर भाग; वार के अनुसार कौन-सा भाग (1..8)
+const RAHU_PART = [8, 2, 7, 5, 6, 4, 3];   // रवि..शनि
+const YAMA_PART = [5, 4, 3, 2, 1, 7, 6];
+const GULIKA_PART = [7, 6, 5, 4, 3, 2, 1];
+export function getDayTimes(dateISO, place = DEFAULT_PLACE) {
+  const t = sunTimes(dateISO, place);
+  if (t.sunrise == null || t.sunset == null) return null;
+  const wd = weekdayIST(dateISO), L = t.sunset - t.sunrise, eighth = L / 8, fifteenth = L / 15;
+  const part = n => ({ start: new Date(t.sunrise + (n - 1) * eighth), end: new Date(t.sunrise + n * eighth) });
+  return {
+    sunrise: new Date(t.sunrise), sunset: new Date(t.sunset),
+    rahu: part(RAHU_PART[wd]), yama: part(YAMA_PART[wd]), gulika: part(GULIKA_PART[wd]),
+    abhijit: { start: new Date(t.sunrise + 7 * fifteenth), end: new Date(t.sunrise + 8 * fifteenth) },
+    brahma: { start: new Date(t.sunrise - 96 * MIN), end: new Date(t.sunrise - 48 * MIN) },
+    dayLengthMin: Math.round(L / MIN)
+  };
+}

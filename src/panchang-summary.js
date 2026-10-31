@@ -14,7 +14,7 @@ const chain = (list, base) => list.map(s => esc(s.label) + (s.end ? ' ' + at(s.e
 
 // inline स्टाइल: नाम ऊपर, मान नीचे, बाईं ओर संरेखित (किसी CSS पर निर्भर नहीं)
 const row = (icon, title, html) => `
-  <div class="timing-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;margin:6px 0;border:1px solid rgba(128,128,128,.28);border-radius:12px">
+  <div class="timing-item" style="display:flex;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:10px;padding:8px 10px;margin:6px 0;border:1px solid rgba(128,128,128,.28);border-radius:12px">
     <span class="timing-icon" style="flex:0 0 auto;width:24px;text-align:center;line-height:1.4">${icon}</span>
     <div style="text-align:left;flex:1;min-width:0">
       <b style="display:block;font-size:.95em">${esc(title)}</b>${html ? `<small style="display:block;line-height:1.6">${html}</small>` : ''}

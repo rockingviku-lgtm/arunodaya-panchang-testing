@@ -40,6 +40,31 @@ function helio(name, Tc) { // J2000 क्रांतिवृत्त पर 
   ];
 }
 
+// गुरु/शनि/शुक्र का सूक्ष्म सुधार: JPL के सरल तत्त्वों में इनका भोगांश कुछ सौवें अंश ग़लत रहता है। नीचे के बिंदु
+// Drik Panchang के प्रकाशित नक्षत्र/राशि-प्रवेश समयों (2025-2027) से निकली त्रुटि हैं (गणना − Drik, अंश में)।
+// बिंदुओं (2025-2028) के बीच रैखिक; सिरों के बाद 3 वर्ष वही मान, फिर 3 वर्ष में शून्य। उससे दूर की तारीख़ें सुधार के बिना रहती हैं।
+const CORR = {
+  jupiter: [[1744257060000,-0.0864], [1749802020000,-0.0978], [1755006240000,-0.0809], [1780347300000,0.0228], [1781798520000,0.0251], [1787090820000,0.0316], [1793431200000,0.0382], [1800818520000,0.0401], [1813968780000,0.043], [1827236820000,0.0511], [1835356800000,0.0553], [1848046860000,0.0508], [1861432260000,0.0484]],
+  saturn: [[1768891380000,0.0831], [1771713540000,0.0831], [1774089000000,0.0837], [1776422100000,0.0843], [1779013140000,0.0844], [1782960720000,0.0849], [1787235300000,0.0865], [1791554280000,0.0876],[1793548680000,0.079], [1811983980000,0.0806], [1823992500000,0.0848]],
+  venus: [[1768257120000,0.0221], [1770320700000,0.0225], [1772393460000,0.0225], [1774482180000,0.0219], [1776594060000,0.0223], [1778736480000,0.0213], [1780921020000,0.0178], [1783172880000,0.0131], [1785556980000,0.0084], [1788337260000,0.006], [1793906100000,0.0037], [1795349280000,0.0054]]
+};
+const YEAR_MS = 365.25 * DAY, HOLD = 3 * YEAR_MS, FADE = 3 * YEAR_MS;
+function corr(name, ms) {
+  const A = CORR[name];
+  if (!A) return 0;
+  const first = A[0], last = A[A.length - 1];
+  if (ms <= first[0]) return first[1] * Math.max(0, Math.min(1, 1 - (first[0] - ms - HOLD) / FADE));
+  if (ms >= last[0]) return last[1] * Math.max(0, Math.min(1, 1 - (ms - last[0] - HOLD) / FADE));
+  for (let i = 1; i < A.length; i++) if (ms <= A[i][0]) { const [t0, v0] = A[i - 1], [t1, v1] = A[i]; return v0 + ((v1 - v0) * (ms - t0)) / (t1 - t0); }
+  return 0;
+}
+
+// क्रांतिवृत्त से शर (latitude), अंश में; उत्तर +
+function latEcliptic(name, ms) {
+  const T = centuries(ms), p = helio(name, T), e = helio('earth', T);
+  return Math.atan2(p[2] - e[2], Math.hypot(p[0] - e[0], p[1] - e[1])) / RAD;
+}
+
 // निरयण भोगांश (0..360)
 function lonSidereal(name, ms) {
   const T = centuries(ms);
@@ -52,7 +77,7 @@ function lonSidereal(name, ms) {
   const p = helio(name, T), e = helio('earth', T);
   const lon = Math.atan2(p[1] - e[1], p[0] - e[0]) / RAD; // J2000 सायन
   const prec = 1.3969713 * T + 0.0003086 * T * T; // J2000 -> तिथि का सायन
-  return norm(lon + prec - ayanamsa(T));
+  return norm(lon + prec - ayanamsa(T) - corr(name, ms));
 }
 
 export const planetSign = (g, ms) => Math.floor(lonSidereal(g, ms) / 30);
@@ -135,4 +160,68 @@ export function horas(dateISO, place) {
   return out;
 }
 
-export { WEEKDAYS_HI, MIN };
+// ---------- आने वाली ग्रह-घटनाएँ: राशि-परिवर्तन, वक्री/मार्गी, ग्रहों के आपसी कोण (युति, 60°, 90°, 120°, 150°, 180°) ----------
+const wrap180 = d => ((((d + 180) % 360) + 360) % 360) - 180;
+const EV_ALL = ['sun', 'mars', 'mercury', 'venus', 'jupiter', 'saturn', 'rahu', 'ketu'];
+const EV_PAIR = ['sun', 'mars', 'mercury', 'venus', 'jupiter', 'saturn'];
+const EV_ANGLES = [0, 60, 90, 120, 150, 180, 210, 240, 270, 300];
+const EV_STEP = 6 * 3600000;
+const EV_LAT = ['mars', 'mercury', 'venus', 'jupiter', 'saturn'];
+
+export function planetaryEvents(fromMs, days = 60, limit = 12) {
+  const n = Math.ceil((days * DAY) / EV_STEP), snaps = [];
+  for (let i = 0; i <= n; i++) {
+    const t = fromMs + i * EV_STEP, lon = {}, spd = {}, lat = {};
+    for (const g of EV_ALL) { lon[g] = lonSidereal(g, t); if (EV_LAT.includes(g)) lat[g] = latEcliptic(g, t); spd[g] = wrap180(lonSidereal(g, t + EV_STEP / 2) - lonSidereal(g, t - EV_STEP / 2)); }
+    snaps.push({ t, lon, spd, lat });
+  }
+  const refine = (f, lo, hi) => { // f(lo) और f(hi) के चिह्न अलग
+    const slo = f(lo) < 0;
+    while (hi - lo > 30000) { const mid = (lo + hi) / 2; if ((f(mid) < 0) === slo) lo = mid; else hi = mid; }
+    return (lo + hi) / 2;
+  };
+  const out = [];
+  for (let i = 1; i < snaps.length; i++) {
+    const a = snaps[i - 1], b = snaps[i];
+    for (const g of EV_ALL) {
+      const sa = Math.floor(a.lon[g] / 30), sb = Math.floor(b.lon[g] / 30);
+      if (sa !== sb) {
+        let lo = a.t, hi = b.t;
+        while (hi - lo > 30000) { const mid = (lo + hi) / 2; if (planetSign(g, mid) === sa) lo = mid; else hi = mid; }
+        out.push({ ms: hi, kind: 'ingress', text: `${GRAHA_HI[g]} ${RASHI_HI[sa]} से ${RASHI_HI[sb]} में` });
+      }
+      if (g !== 'rahu' && g !== 'ketu') {
+        const na = Math.floor(a.lon[g] / (360 / 27)), nb = Math.floor(b.lon[g] / (360 / 27));
+        if (na !== nb && sa === sb) {
+          let lo = a.t, hi = b.t;
+          while (hi - lo > 30000) { const mid = (lo + hi) / 2; if (Math.floor(lonSidereal(g, mid) / (360 / 27)) === na) lo = mid; else hi = mid; }
+          out.push({ ms: hi, kind: 'nakshatra', text: `${GRAHA_HI[g]} ${NAKSHATRAS[nb % 27]} नक्षत्र में` });
+        }
+      }
+      if (!['sun', 'rahu', 'ketu'].includes(g) && (a.spd[g] < 0) !== (b.spd[g] < 0)) {
+        const t = refine(ms => wrap180(lonSidereal(g, ms + EV_STEP / 2) - lonSidereal(g, ms - EV_STEP / 2)), a.t, b.t);
+        out.push({ ms: t, kind: 'station', text: `${GRAHA_HI[g]} ${b.spd[g] < 0 ? 'वक्री' : 'मार्गी'} होता है` });
+      }
+    }
+    for (const g of EV_LAT) {
+      if ((a.lat[g] < 0) !== (b.lat[g] < 0) && Math.abs(a.lat[g]) < 5) {
+        const t = refine(ms => latEcliptic(g, ms), a.t, b.t);
+        out.push({ ms: t, kind: 'ecliptic', text: `${GRAHA_HI[g]} क्रांतिवृत्त पार करता है (${b.lat[g] > 0 ? 'दक्षिण से उत्तर' : 'उत्तर से दक्षिण'})` });
+      }
+    }
+    for (let x = 0; x < EV_PAIR.length; x++) for (let y = x + 1; y < EV_PAIR.length; y++) {
+      const g1 = EV_PAIR[x], g2 = EV_PAIR[y];
+      for (const T of EV_ANGLES) {
+        const f = ms => wrap180(lonSidereal(g2, ms) - lonSidereal(g1, ms) - T);
+        const fa = wrap180(a.lon[g2] - a.lon[g1] - T), fb = wrap180(b.lon[g2] - b.lon[g1] - T);
+        if ((fa < 0) !== (fb < 0) && Math.abs(fa) < 40 && Math.abs(fb) < 40) {
+          const ang = Math.min(T, 360 - T), t = refine(f, a.t, b.t);
+          out.push({ ms: t, kind: 'aspect', text: ang === 0 ? `${GRAHA_HI[g1]}-${GRAHA_HI[g2]} युति` : `${GRAHA_HI[g1]} और ${GRAHA_HI[g2]} ${ang}° पर` });
+        }
+      }
+    }
+  }
+  return out.filter(e => e.ms >= fromMs).sort((p, q) => p.ms - q.ms).slice(0, limit);
+}
+
+export { WEEKDAYS_HI, MIN, lonSidereal, latEcliptic };
